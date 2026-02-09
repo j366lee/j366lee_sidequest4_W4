@@ -34,6 +34,10 @@ let player;
 // Character face orientation
 let chr = {};
 let chrOrientation = "front";
+let wall = {};
+let wallState = "back";
+let floor = {};
+let floorState = "back";
 
 function preload() {
   // Ensure level data is ready before setup runs.
@@ -42,6 +46,10 @@ function preload() {
   chr.back = loadImage("images/chrback.png");
   chr.right = loadImage("images/chrright.png");
   chr.left = loadImage("images/chrleft.png");
+  wall.back = loadImage("images/backroomwall.png");
+  wall.pool = loadImage("images/poolroomwall.png");
+  floor.back = loadImage("images/backroomfloor.png");
+  floor.pool = loadImage("images/poolroomfloor.png");
 }
 
 function setup() {
@@ -74,8 +82,9 @@ function draw() {
 
 function drawHUD() {
   // HUD matches your original idea: show level count and controls.
-  fill(0);
+  fill(255);
   text(`Level ${li + 1}/${levels.length} — WASD/Arrows to move`, 10, 16);
+  text("Escape the Backrooms.", 10, height - 16);
 }
 
 function keyPressed() {
@@ -117,6 +126,14 @@ function loadLevel(idx) {
   } else {
     // Fallback spawn: top-left-ish (but inside bounds).
     player.setCell(1, 1);
+  }
+
+  if (li === 1) {
+    wallState = "pool";
+    floorState = "pool";
+  } else if (li === 0) {
+    wallState = "back";
+    floorState = "back";
   }
 
   // Ensure the canvas matches this level’s dimensions.

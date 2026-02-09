@@ -104,10 +104,27 @@ class Level {
         const v = this.grid[r][c];
 
         // Base tile fill
-        if (v === 1) fill(0);
-        else fill(255);
 
-        rect(c * this.ts, r * this.ts, this.ts, this.ts);
+        if (v === 1)
+          (fill(0), rect(c * this.ts, r * this.ts, this.ts, this.ts));
+        else {
+          imageMode(CORNER);
+          image(floor[floorState], c * this.ts, r * this.ts);
+          if (this.grid[r - 1][c] === 1) {
+            image(wall[wallState], c * this.ts, r * this.ts - this.ts);
+            for (let i = 0; i <= 32; i++) {
+              stroke(71, 65, 60, 100 * ((32 - i) / 32));
+              strokeCap(SQUARE);
+              strokeWeight(1);
+              line(
+                c * this.ts,
+                r * this.ts - i,
+                c * this.ts + this.ts,
+                r * this.ts - i,
+              );
+            }
+          }
+        }
 
         // Goal highlight overlay (only on tile 3).
         if (v === 3) {
