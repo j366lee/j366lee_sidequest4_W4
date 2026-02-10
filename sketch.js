@@ -134,7 +134,6 @@ function keyPressed() {
     let randomStage = levels[2].grid;
     for (let r = 1; r < randomStage.length; r++) {
       for (let c = 0; c < randomStage[r].length; c++) {
-        print(player.r);
         if (randomStage[r][c] === 1) {
           if (random() > 0.5) {
             randomStage[r][c] = 0;
