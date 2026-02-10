@@ -45,6 +45,7 @@ class Player {
     fill(20, 120, 255);
     imageMode(CENTER);
     image(chr[chrOrientation], this.pixelX(), this.pixelY());
+    image(shadow, this.pixelX(), this.pixelY());
   }
 
   /*

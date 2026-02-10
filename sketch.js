@@ -42,6 +42,9 @@ let floorState = "back";
 function preload() {
   // Ensure level data is ready before setup runs.
   levelsData = loadJSON("levels.json");
+
+  //sprite images
+  // i miss rpgmaker
   chr.front = loadImage("images/chrfront.png");
   chr.back = loadImage("images/chrback.png");
   chr.right = loadImage("images/chrright.png");
@@ -50,6 +53,7 @@ function preload() {
   wall.pool = loadImage("images/poolroomwall.png");
   floor.back = loadImage("images/backroomfloor.png");
   floor.pool = loadImage("images/poolroomfloor.png");
+  shadow = loadImage("images/shadow.png");
 }
 
 function setup() {
@@ -131,9 +135,11 @@ function loadLevel(idx) {
   if (li === 1) {
     wallState = "pool";
     floorState = "pool";
+    shadow.resize(3000, 3000);
   } else if (li === 0) {
     wallState = "back";
     floorState = "back";
+    shadow.resize(4000, 4000);
   }
 
   // Ensure the canvas matches this level’s dimensions.
