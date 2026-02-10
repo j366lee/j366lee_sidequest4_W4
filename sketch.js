@@ -38,6 +38,7 @@ let wall = {};
 let wallState = "back";
 let floor = {};
 let floorState = "back";
+let randomizedWalls = false;
 
 function preload() {
   // Ensure level data is ready before setup runs.
@@ -51,8 +52,11 @@ function preload() {
   chr.left = loadImage("images/chrleft.png");
   wall.back = loadImage("images/backroomwall.png");
   wall.pool = loadImage("images/poolroomwall.png");
+  wall.mall = loadImage("images/mallroomwall.png");
   floor.back = loadImage("images/backroomfloor.png");
   floor.pool = loadImage("images/poolroomfloor.png");
+  floor.mall = loadImage("images/mallroomfloor.png");
+
   shadow = loadImage("images/shadow.png");
 }
 
@@ -115,6 +119,29 @@ function keyPressed() {
   if (moved && levels[li].isGoal(player.r, player.c)) {
     nextLevel();
   }
+
+  print(levelsData.levels);
+
+  // on the third stage, walls are randomized
+  if (randomizedWalls === true) {
+    let randomStage = levels[2].grid;
+    for (let r = 1; r < randomStage.length; r++) {
+      for (let c = 0; c < randomStage[r].length; c++) {
+        print(player.r);
+        if (randomStage[r][c] === 1) {
+          if (random() > 0.5) {
+            randomStage[r][c] = 0;
+          }
+          // checking to make sure the player doesnt get stuck inside a newly
+          // generated wall
+        } else if (randomStage[r][c] === 0 && r != player.r && c != player.c) {
+          if (random() > 0.5) {
+            randomStage[r][c] = 1;
+          }
+        }
+      }
+    }
+  }
 }
 
 // ----- Level switching -----
@@ -140,6 +167,11 @@ function loadLevel(idx) {
     wallState = "back";
     floorState = "back";
     shadow.resize(4000, 4000);
+  } else if (li === 2) {
+    wallState = "mall";
+    floorState = "mall";
+    shadow.resize(5000, 5000);
+    randomizedWalls = true;
   }
 
   // Ensure the canvas matches this level’s dimensions.

@@ -99,6 +99,7 @@ class Level {
     - Everything else: light floor
     - Goal tile (3): add a highlighted inset rectangle
     */
+
     for (let r = 0; r < this.rows(); r++) {
       for (let c = 0; c < this.cols(); c++) {
         const v = this.grid[r][c];
