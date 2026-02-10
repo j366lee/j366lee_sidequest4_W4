@@ -53,9 +53,11 @@ function preload() {
   wall.back = loadImage("images/backroomwall.png");
   wall.pool = loadImage("images/poolroomwall.png");
   wall.mall = loadImage("images/mallroomwall.png");
+  wall.creepy = loadImage("images/creepywall.png");
   floor.back = loadImage("images/backroomfloor.png");
   floor.pool = loadImage("images/poolroomfloor.png");
   floor.mall = loadImage("images/mallroomfloor.png");
+  floor.creepy = loadImage("images/creepyfloor.png");
 
   shadow = loadImage("images/shadow.png");
 }
@@ -93,6 +95,11 @@ function drawHUD() {
   fill(255);
   text(`Level ${li + 1}/${levels.length} — WASD/Arrows to move`, 10, 16);
   text("Escape the Backrooms.", 10, height - 16);
+
+  if (li === 3) {
+    print("hello my sigma console");
+    text("THERE IS NO ESCAPE. ONLY LOOPS.", 20, 200);
+  }
 }
 
 function keyPressed() {
@@ -134,7 +141,7 @@ function keyPressed() {
           }
           // checking to make sure the player doesnt get stuck inside a newly
           // generated wall
-        } else if (randomStage[r][c] === 0 && r != player.r && c != player.c) {
+        } else if (randomStage[r][c] === 0 && c != player.c) {
           if (random() > 0.5) {
             randomStage[r][c] = 1;
           }
@@ -170,8 +177,13 @@ function loadLevel(idx) {
   } else if (li === 2) {
     wallState = "mall";
     floorState = "mall";
-    shadow.resize(5000, 5000);
+    shadow.resize(2000, 2000);
     randomizedWalls = true;
+  } else if (li === 3) {
+    wallState = "creepy";
+    floorState = "creepy";
+    shadow.resize(1000, 1000);
+    randomizedWalls = false;
   }
 
   // Ensure the canvas matches this level’s dimensions.
